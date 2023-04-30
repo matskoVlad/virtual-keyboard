@@ -1,17 +1,16 @@
 //создать массив на английском языке
 const keyboardLayoutEN = [
-    '~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
-    'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']',
-    'CapsLk', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\'',
-    '\\', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/',
-    'Space', 'Backspace', 'Alt'
+    'Tab', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=',
+    'CapsLk', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']',
+    'Shift', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\'', '\\', 
+    'Ctrl', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/','Space', 'Backspace', 
+    'Alt'
   ];
 
 document.body.innerHTML = '<form><input type="text" class="inputText"></form>'
 document.body.insertAdjacentHTML('beforeend', '<div class="keys"></div>')
 
 // создаем клавиши в html
-
 let createKeyboard = () => {
     let spaceForKeyboard = document.querySelector('.keys');
     let res = '';
@@ -20,5 +19,20 @@ let createKeyboard = () => {
         spaceForKeyboard.innerHTML = res;
     })
 }
-
+// запускам функцию
 createKeyboard()
+// отслеживаем инпут и прописываем функцию передающую при клике по кнопке значение id  в поле ввода текста
+const inputText = document.querySelector('input')
+let keysArray = document.querySelectorAll('.oneKey')
+keysArray.forEach((el) => {
+    el.addEventListener('click', () => {
+        inputText.value += el.id
+    })
+})
+// реализуем Backspace
+const backspace = document.getElementById('Backspace')
+backspace.addEventListener('click', ()=> {
+    let text = inputText.value
+    inputText.value = text.slice(0, -10)
+    // помимо последнего сивола в записи удаляется и надписть "Backspace"
+})
