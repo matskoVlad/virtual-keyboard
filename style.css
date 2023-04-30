@@ -1,0 +1,26 @@
+body {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+form {
+    margin: 0 auto;
+}
+
+input {
+    width: 99%;
+}
+
+.keys {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    grid-template-rows: 1fr;
+    row-gap: 1px;
+    column-gap: 1px;
+}
+
+.oneKey {
+    text-align: center;
+    border: 1px solid black;
+}
