@@ -25,14 +25,23 @@ createKeyboard()
 const inputText = document.querySelector('input')
 let keysArray = document.querySelectorAll('.oneKey')
 keysArray.forEach((el) => {
-    el.addEventListener('click', () => {
-        inputText.value += el.id
+    
+    el.addEventListener('click', (ev) => {
+        console.log(el.id)
+        if (ev.target.id.length === 1){
+            inputText.value += el.id
+        }
     })
 })
 // реализуем Backspace
 const backspace = document.getElementById('Backspace')
 backspace.addEventListener('click', ()=> {
     let text = inputText.value
-    inputText.value = text.slice(0, -10)
-    // помимо последнего сивола в записи удаляется и надписть "Backspace"
+    inputText.value = text.slice(0, -1)
+})
+//добавление функционала "space"
+const space = document.getElementById('Space')
+space.addEventListener('click', ()=> {
+    let text = inputText.value
+    inputText.value = text + ' '
 })
