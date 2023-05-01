@@ -14,23 +14,27 @@ const keyboardLayoutRU = [
     'Alt'
   ];
 
-document.body.innerHTML = '<form><input type="text" class="inputText"></form>'
-document.body.insertAdjacentHTML('beforeend', '<div class="keys"></div>')
+document.body.innerHTML = '<form><input type="text" class="inputText"></form><h3>-переключение раскладки Alt+Shift (для корректной работы необходимо что бы раскладка на ПК и у виртуальной клавиатуры совпадали)</h3>'
+document.body.insertAdjacentHTML('beforeend', '<div class="keys"></div>');
+let currentLang = 'en';
+let currentKeyb = keyboardLayoutEN;
 
 // создаем клавиши в html
-let createKeyboard = () => {
+let createKeyboard = (currentKeyb) => {
     let spaceForKeyboard = document.querySelector('.keys');
     let res = '';
-    keyboardLayoutEN.forEach((el) => {
+    currentKeyb.forEach((el) => {
         res += `<div class="oneKey" id="${el}">${el}</div>`;
         spaceForKeyboard.innerHTML = res;
     })
 }
 // запускам функцию
-createKeyboard()
+createKeyboard(currentKeyb);
 // отслеживаем инпут и прописываем функцию передающую при клике по кнопке значение id  в поле ввода текста
-const inputText = document.querySelector('input')
-let keysArray = document.querySelectorAll('.oneKey')
+
+function functionalButtons(){
+    const inputText = document.querySelector('input');
+    let keysArray = document.querySelectorAll('.oneKey')
 keysArray.forEach((el) => {
     el.addEventListener('click', (ev) => {
         console.log(el.id)
@@ -39,7 +43,7 @@ keysArray.forEach((el) => {
         }
     })
 })
-// реализуем 'Backspace'
+    // реализуем 'Backspace'
 const backspace = document.getElementById('Backspace')
 backspace.addEventListener('click', (event)=> {
     console.log(event.id)
@@ -58,23 +62,22 @@ tab.addEventListener('click', ()=> {
     let text = inputText.value
     inputText.value = text + '    '
 })
-
 // Отслеживаем событие нажатия на кнопку
 document.addEventListener('keydown', (event) => {
     console.log(event.key)
     if (event.key.length === 1){
-        inputText.value += event.key.toUpperCase()
+        // inputText.value += event.key.toUpperCase()
         let pressedKey = document.getElementById(event.key.toUpperCase())
         pressedKey.classList.add('keyPress')
     } else if (event.key == 'Backspace') {
         let text = inputText.value
-        inputText.value = text.slice(0, -1)
+        // inputText.value = text.slice(0, -1)
         let pressedKey = document.getElementById(event.key)
         pressedKey.classList.add('keyPress')
     } else if (event.code == 'Space') {
         console.log(event.code)
         let text = inputText.value
-        inputText.value = text + ' '
+        // inputText.value = text + ' '
         let pressedKey = document.getElementById('Space')
         pressedKey.classList.add('keyPress')
     } else if (event.key == 'Tab'){
@@ -94,7 +97,7 @@ document.addEventListener('keydown', (event) => {
         pressedKey.classList.toggle('keyPress')
     }
 })
-
+// Отмена нажатия на кнопку
 document.addEventListener('keyup', (event) => {
     if (event.key.length === 1){
         let pressedKey = document.getElementById(event.key.toUpperCase())
@@ -119,5 +122,26 @@ document.addEventListener('keyup', (event) => {
         let pressedKey = document.getElementById(event.key)
         pressedKey.classList.remove('keyPress')
     }
-
 })
+}
+
+functionalButtons()
+
+function changeKeyb(event){
+    if (event.altKey && event.shiftKey){
+        if (currentLang === 'en') {
+            currentLang = 'ru';
+            currentKeyb = keyboardLayoutRU;
+
+        } else {
+            currentLang = 'en';
+            currentKeyb = keyboardLayoutEN;
+    }
+    createKeyboard(currentKeyb);
+    functionalButtons();
+    }
+}
+
+
+
+document.addEventListener('keydown', changeKeyb)
