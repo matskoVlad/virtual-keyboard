@@ -1,6 +1,7 @@
 body {
     max-width: 1200px;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 form {
@@ -23,4 +24,8 @@ input {
 .oneKey {
     text-align: center;
     border: 1px solid black;
+}
+
+.keyPress {
+    background: green;;
 }
